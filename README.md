@@ -62,28 +62,6 @@ npm run dev
 
 ---
 
-## ☁️ Free Hosting on Netlify (Frontend)
-
-This app is a real-time chat app with a persistent Socket.IO backend and SQLite database. Netlify can host the frontend for free, but it cannot host the current backend stack reliably for free as-is.
-
-The recommended free setup is:
-- Frontend: Netlify
-- Backend: Render or Railway
-- Database: SQLite on the backend service (or migrate to Postgres later)
-
-### Frontend setup in Netlify
-1. Import the repository as a Netlify site.
-2. Set the base directory to `client`.
-3. Netlify will use `client/netlify.toml` for the build and SPA redirect.
-4. Use the following environment variables in Netlify:
-   - `VITE_API_URL=https://your-backend-url.com`
-   - `VITE_SOCKET_URL=https://your-backend-url.com`
-
-### Backend setup
-Deploy the `server` folder to Render/Railway and set `PORT` from the platform env. Then point the frontend env vars to that backend URL.
-
-Important: the current Socket.IO server expects a long-lived Node process and local filesystem for uploads. Netlify alone is not the right host for the backend in a free tier. The frontend is ready for that split, and you can use the two env vars above to connect the app to a hosted backend.
-
 ### Single-service Render setup
 
 The repository can also run frontend and backend together from one Render Web Service:
