@@ -110,6 +110,18 @@ app.use(cors({
 app.use(express.json());
 app.use('/uploads', express.static(uploadsDir));
 
+const clientDistDir = path.join(__dirname, '..', '..', 'client', 'dist');
+if (fs.existsSync(clientDistDir)) {
+  app.use(express.static(clientDistDir));
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api') || req.path.startsWith('/socket.io')) {
+      next();
+      return;
+    }
+    res.sendFile(path.join(clientDistDir, 'index.html'));
+  });
+}
+
 // In-memory mapping of active socket connections
 const activeSockets = new Map();
 const socketUserMap = new Map();

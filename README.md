@@ -83,3 +83,15 @@ The recommended free setup is:
 Deploy the `server` folder to Render/Railway and set `PORT` from the platform env. Then point the frontend env vars to that backend URL.
 
 Important: the current Socket.IO server expects a long-lived Node process and local filesystem for uploads. Netlify alone is not the right host for the backend in a free tier. The frontend is ready for that split, and you can use the two env vars above to connect the app to a hosted backend.
+
+### Single-service Render setup
+
+The repository can also run frontend and backend together from one Render Web Service:
+
+1. Create a Render Web Service connected to this repository.
+2. Leave **Root Directory** empty. Do not enter `project root`; that is not a folder in this repository.
+3. Set **Build Command** to `npm run build`.
+4. Set **Start Command** to `npm start`.
+5. Set `CORS_ORIGIN` to `*` or to the final public URL.
+
+The Node server serves `client/dist` and handles the API and Socket.IO from the same URL. Do not set `VITE_API_URL` or `VITE_SOCKET_URL` for this single-service deployment; the frontend uses its own origin automatically.
